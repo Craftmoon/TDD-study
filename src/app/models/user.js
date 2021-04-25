@@ -1,8 +1,19 @@
- module.exports = (sequelize, DataTypes) =>{
+const bcrypt = require('bcryptjs');
+
+module.exports = (sequelize, DataTypes) =>{
     const User = sequelize.define("User",{
         name: DataTypes.STRING,
         email: DataTypes.STRING,
+        password: DataTypes.VIRTUAL,  //virtual types are only present in the model and they don't appear in the database
         password_hash: DataTypes.STRING,
+    },{
+        hooks:{
+            beforeSave: async user =>{
+                if(user.password){
+                    user.password_hash = await bcrypt.hash(user.password, 8);
+                }
+            }
+        }
     });
 
     return User;

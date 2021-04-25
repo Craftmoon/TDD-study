@@ -13,7 +13,7 @@ describe('Authentication', ()=>{
         const user = await User.create({ 
             name: "Vitor", 
             email:"v.augustosilva@gmail.com", 
-            password_hash:"123456789123456789"
+            password:"123456789123456789"
         });
 
         const response = await request(app)
